@@ -11,39 +11,26 @@ export default function Signin() {
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
-    console.log(email)
-    console.log(password)
-    console.log(name)
-    console.log(image)
-
     const navigate = useNavigate();
 
-    function CreateUser(event) {
-        
+    function CreateUser(event) {   
         event.preventDefault();
         const body = {
             email: email,
             password: password,
             name: name,
             image: image
-        }
-
-        
+        }        
 
         const promise = axios.post(
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body);
 
             promise.then((res) => {
                 console.log(res.data);
-                
               });
-            promise.then(navigate("/", { replace: true }));  
-            
+        
+            promise.then(navigate("/", { replace: true }));        
     }
-
-
-
-
 
     return (
         <Container>
@@ -59,8 +46,6 @@ export default function Signin() {
             <Link to='/'>Já tem uma conta? Faça login!</Link>  
         </Container>        
     )
-
-
 }
 
 const Container = styled.div`
@@ -72,7 +57,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: flex-start;
     margin-top: 68px;
-    
+
     img {
         width: 180px;
     }
@@ -88,10 +73,8 @@ const Container = styled.div`
         font-size: 14px;
         color: #52B6FF;
         font-weight: 400px;
-        margin: 25px 0;
-            
+        margin: 25px 0;        
     }
-
 `
 
 const Form = styled.form`
@@ -99,7 +82,6 @@ const Form = styled.form`
     flex-direction: column;
     padding: 0 36px;
     width: 100%;
-    
     
     input {
         height: 45px;

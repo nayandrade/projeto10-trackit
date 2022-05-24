@@ -1,9 +1,7 @@
 import { useState} from "react"
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
-
 import Logo from "../assets/img/trackitlogo.JPG"
-
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -15,16 +13,8 @@ export default function Login() {
         const body = {
             email: email,
             password: password,
-            
         }
-
-
     }
-
-
-
-
-
 
     return (
         <Container>
@@ -38,7 +28,6 @@ export default function Login() {
             <Link to='/cadastro'>Não tem uma conta? Cadastre-se!</Link>            
         </Container>
     )
-
 }
 
 const Container = styled.div`
@@ -50,7 +39,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: flex-start;
     margin-top: 68px;
-    
+
     img {
         width: 180px;
     }
@@ -66,10 +55,8 @@ const Container = styled.div`
         font-size: 14px;
         color: #52B6FF;
         font-weight: 400px;
-        margin: 25px 0;
-            
+        margin: 25px 0;  
     }
-
 `
 
 const Form = styled.form`
