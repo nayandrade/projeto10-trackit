@@ -1,29 +1,46 @@
 import { useState} from "react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import styled from 'styled-components';
 import Logo from "../assets/img/trackitlogo.JPG"
 
-export default function Login() {
+export default function Login( {token, setToken, userImage, setUserImage} ) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [disabled, setDisabled] = useState(false)
+    
+    const navigate = useNavigate();
 
     function LoginUser(event) {
         event.preventDefault();
+        setDisabled(true);
 
         const body = {
             email: email,
             password: password,
-        }
+        };
+        const promise = axios.post(
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body);
+
+        promise.then((res) => {
+            setToken(res.data.token)
+            setDisabled(false);
+            setUserImage(res.data.image)
+            localStorage.setItem('Login-Token', res.data.token);
+            navigate('/habitos')
+           
+        });       
     }
+    
 
     return (
         <Container>
             <img src={Logo} alt="Logo icon" />
             <h1>TrackIt</h1>
-            <Form onSubmit={LoginUser}>                
-                <input type="email" id="email" value={email} placeholder="email" required onChange={(e) => setEmail(e.target.value)}/>
-                <input type="password" id="password" value={password} placeholder="senha" required onChange={(e) => setPassword(e.target.value)}/>       
-                <div><button type="submit">Entrar</button></div>
+            <Form onSubmit={LoginUser} >                
+                <input type="email" id="email" value={email} disabled={disabled} placeholder="email" required onChange={(e) => setEmail(e.target.value)}/>
+                <input type="password" id="password" value={password} disabled={disabled} placeholder="senha" required onChange={(e) => setPassword(e.target.value)}/>       
+                <div><button type="submit" disabled={disabled}>Entrar</button></div>
             </Form>
             <Link to='/cadastro'>Não tem uma conta? Cadastre-se!</Link>            
         </Container>
