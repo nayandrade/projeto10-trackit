@@ -28,7 +28,7 @@ export default function Login( {token, setToken, userImage, setUserImage} ) {
             setUserImage(res.data.image)
             localStorage.setItem('Login-Token', res.data.token);
             navigate('/habitos')
-            //console.log(res.data);  
+           
         });       
     }
     

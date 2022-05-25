@@ -14,7 +14,6 @@ export default function Habits( {token, userImage} ) {
     useEffect(() => {
         const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config);
         promise.then((res) => {
-            //console.log(res.data);
             setHabitList(res.data)
         });
     }, [])   
