@@ -26,10 +26,11 @@ export default function Signin() {
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body);
 
             promise.then((res) => {
-                console.log(res.data);
-              });
+                //console.log(res.data);
+                navigate("/", { replace: true })
+            });
         
-            promise.then(navigate("/", { replace: true }));        
+                   
     }
 
     return (
