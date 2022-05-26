@@ -33,7 +33,9 @@ function Cards ( {habit} ) {
 }
 
 export default function Habits( {token, userImage} ) {
-    const [habitList, setHabitList] = useState([])                                  
+    const [habitList, setHabitList] = useState([])  
+    const [habitName, setHabitNane] = useState('')
+    const [habitDays, setHabitDays] = useState([])                               
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
@@ -67,8 +69,8 @@ export default function Habits( {token, userImage} ) {
 
     function createHabit() {
         const data = {            
-                name: "Conversar",
-                days: [2, 3, 4, 7]
+                name: habitName,
+                days: habitDays
         };
 
         const body = {
@@ -92,7 +94,7 @@ export default function Habits( {token, userImage} ) {
         <Main>
             <section>
                 <h2>Meus Hábitos</h2>
-                <button onClick={createHabit}>+</button>
+                <button>+</button>
             </section>       
             {
                 checkHabits()
