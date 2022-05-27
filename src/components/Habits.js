@@ -28,9 +28,8 @@ function Cards ( {habit} ) {
     )
 }
 
-function WeekDay ( {day, name, habitDays, status, setHabitDays} ) {
+function WeekDay ( {day, name, habitDays, status, renderWeek, setRenderWeek, setHabitDays} ) {
     const [chosen, setChosen] = useState(false)
-    console.log(habitDays)
 
     useEffect(() => {
         if (habitDays.indexOf(day) !== -1) {
@@ -61,6 +60,7 @@ export default function Habits( {token, userImage} ) {
     const [habitList, setHabitList] = useState([])  
     const [habitName, setHabitName] = useState('')
     const [habitDays, setHabitDays] = useState([])
+    const [loadHabits, setLoadHabit] = useState(true)
     const [showForm, setShowForm] = useState(false)
     const week =  [{weekday: 7, name: 'D', status: false},
                         {weekday: 1, name: 'S', status: false}, 
@@ -69,22 +69,23 @@ export default function Habits( {token, userImage} ) {
                         {weekday: 4, name: 'Q', status: false}, 
                         {weekday: 5, name: 'S', status: false}, 
                         {weekday: 6, name: 'S', status: false}];
-    const [bolinha, setBolinha] = useState ({...week})
-    console.log(habitName)
-    console.log(habitDays)                               
+    const [renderWeek, setRenderWeek] = useState ({...week})
+                                   
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     };
 
-    useEffect(() => {
+    if (loadHabits) {
         const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config);       
         
         promise.then((res) => {
             setHabitList(res.data)
+            setLoadHabit(false)
         });
-    }, []);
+    }
+
         
     function checkHabits() {
         if(habitList.length <= 0) {
@@ -117,13 +118,15 @@ export default function Habits( {token, userImage} ) {
                         day={day.weekday}
                         name={day.name}
                         status={day.status}
+                        renderWeek={renderWeek}
+                        setRenderWeek={setRenderWeek}
                         habitDays={habitDays}
                         setHabitDays={setHabitDays}
                         />
                     ))
                 }
                 </div>
-                <Buttons><Cancel type="reset" value="Reset">Cancelar</Cancel><Save type="submit" value="Submit">Salvar</Save></Buttons>
+                <Buttons><Cancel type="reset" value="Reset" onClick={() => setShowForm(false)}>Cancelar</Cancel><Save type="submit" value="Submit">Salvar</Save></Buttons>
             </Form>
 
         )
@@ -148,6 +151,8 @@ export default function Habits( {token, userImage} ) {
             promise.then((res) => {
                 setHabitName("");
                 setHabitDays([]);
+                setLoadHabit(true)
+                setShowForm(false)
             });
         }  else {
             alert("Selecione algum dia para esse habito")
@@ -164,7 +169,7 @@ export default function Habits( {token, userImage} ) {
         <Main>
             <section>
                 <h2>Meus Hábitos</h2>
-                <OpenForm onClick={() => setShowForm(!showForm)}>+</OpenForm>
+                <OpenForm onClick={() => setShowForm(true)}>+</OpenForm>
             </section>
             {
                 showForm ? HabitForm() : null
