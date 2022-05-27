@@ -2,16 +2,12 @@ import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from 'styled-components';
+import Data from "./data/Data";
+import Footer from "./Footer";
 
 function Cards ( {habit} ) {
     const [days, setDays] = useState (habit.days)
-    const [week, setWeek] = useState ([{weekday: 7, status: false, name: 'D'},
-                                        {weekday: 1, status: false, name: 'S'}, 
-                                        {weekday: 2, status: false, name: 'T'}, 
-                                        {weekday: 3, status: false, name: 'Q'}, 
-                                        {weekday: 4, status: false, name: 'Q'}, 
-                                        {weekday: 5, status: false, name: 'S'}, 
-                                        {weekday: 6, status: false, name: 'S'}]); 
+    const [week, setWeek] = useState (Data); 
    
     days.forEach((e, i) => {week.map((day, index) => { if(day.weekday === e) {day.status = true}})})
     
@@ -32,11 +28,18 @@ function Cards ( {habit} ) {
     )
 }
 
-function WeekDay ( {day, name, habitDays, setHabitDays} ) {
-    const [chosen, setChosen] = useState('')
+function WeekDay ( {day, name, habitDays, status, setHabitDays} ) {
+    const [chosen, setChosen] = useState(false)
     console.log(habitDays)
 
+    useEffect(() => {
+        if (habitDays.indexOf(day) !== -1) {
+            setChosen(!chosen)
+        }
+    }, [false]) 
+
     function Chose() {
+
         if(!chosen) {
             setChosen(!chosen)
             setHabitDays([...habitDays, day])
@@ -59,6 +62,14 @@ export default function Habits( {token, userImage} ) {
     const [habitName, setHabitName] = useState('')
     const [habitDays, setHabitDays] = useState([])
     const [showForm, setShowForm] = useState(false)
+    const week =  [{weekday: 7, name: 'D', status: false},
+                        {weekday: 1, name: 'S', status: false}, 
+                        {weekday: 2, name: 'T', status: false}, 
+                        {weekday: 3, name: 'Q', status: false}, 
+                        {weekday: 4, name: 'Q', status: false}, 
+                        {weekday: 5, name: 'S', status: false}, 
+                        {weekday: 6, name: 'S', status: false}];
+    const [bolinha, setBolinha] = useState ({...week})
     console.log(habitName)
     console.log(habitDays)                               
     const config = {
@@ -93,13 +104,7 @@ export default function Habits( {token, userImage} ) {
     }
 
     function HabitForm() {
-        const week =  [{weekday: 7, name: 'D'},
-                        {weekday: 1, name: 'S'}, 
-                        {weekday: 2, name: 'T'}, 
-                        {weekday: 3, name: 'Q'}, 
-                        {weekday: 4, name: 'Q'}, 
-                        {weekday: 5, name: 'S'}, 
-                        {weekday: 6, name: 'S'}]; 
+        
 
         return (
             <Form onSubmit={createHabit}>
@@ -111,6 +116,7 @@ export default function Habits( {token, userImage} ) {
                         key={index}
                         day={day.weekday}
                         name={day.name}
+                        status={day.status}
                         habitDays={habitDays}
                         setHabitDays={setHabitDays}
                         />
@@ -167,9 +173,7 @@ export default function Habits( {token, userImage} ) {
                 checkHabits()
             }  
         </Main>
-        <Footer>
-
-        </Footer>          
+        <Footer />         
         </>     
     )
 }
@@ -271,15 +275,7 @@ const WeekDays = styled.div`
         margin-top: 13px;
 `
 
-const Footer = styled.footer`
-    width: 100%;
-    height: 70px;
-    background-color: #fff;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-`
+
 
 const Day = styled.div`
     width: 30px;
