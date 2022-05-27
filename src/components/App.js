@@ -13,7 +13,6 @@ export default function App() {
 
   return (
     <BrowserRouter>
-
       <Routes>
         <Route path="/" element={<Login token={token} setToken={setToken} userImage={userImage} setUserImage={setUserImage} />} />
         <Route path="/cadastro" element={<Signin />} />
@@ -21,7 +20,6 @@ export default function App() {
         <Route path="/hoje" element={<Today />} /> 
         <Route path="/historico" element={<History />} />   
       </Routes>
-      
     </BrowserRouter>
 
   );

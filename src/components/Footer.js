@@ -8,7 +8,6 @@ import styled from 'styled-components';
 export default function Footer() {
     const percentage = 66;
 
-
     return(
         <FooterArea>
             <section>

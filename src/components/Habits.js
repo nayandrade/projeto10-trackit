@@ -85,8 +85,7 @@ export default function Habits( {token, userImage} ) {
             setLoadHabit(false)
         });
     }
-
-        
+  
     function checkHabits() {
         if(habitList.length <= 0) {
             return(
@@ -106,7 +105,6 @@ export default function Habits( {token, userImage} ) {
 
     function HabitForm() {
         
-
         return (
             <Form onSubmit={createHabit}>
                 <input type="text" id="habito" value={habitName} placeholder="nome do hábito" required onChange={(e) => setHabitName(e.target.value)}></input>
