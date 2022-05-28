@@ -3,16 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from 'styled-components';
 import Logo from "../assets/img/trackitlogo.JPG"
+import { ThreeDots } from  'react-loader-spinner'
 
 export default function Signin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
+    const [loadingButton, setLoadingButton] = useState(false)
     const navigate = useNavigate();
 
     function CreateUser(event) {   
         event.preventDefault();
+        setLoadingButton(true);
         const body = {
             email: email,
             password: password,
@@ -25,7 +28,12 @@ export default function Signin() {
 
             promise.then((res) => {
                 navigate("/", { replace: true })
-            });               
+                setLoadingButton(false);
+            });
+            promise.catch((res) => {
+                alert('Erro!');
+                setLoadingButton(false);
+            })                
     }
 
     return (
@@ -37,7 +45,13 @@ export default function Signin() {
                 <input type="password" id="password" value={password} placeholder="senha" required onChange={(e) => setPassword(e.target.value)}/>       
                 <input type="text" id="nome" value={name} placeholder="nome" required onChange={(e) => setName(e.target.value)}/> 
                 <input type="url" name="image" id="image" pattern="/([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i" value={image} placeholder="foto" required onChange={(e) => setImage(e.target.value)}/>
-                <div><button type="submit">Cadastrar</button></div>
+                <div>
+                    {
+                        loadingButton ? <button type="submit"><ThreeDots color="#FFFFFF" /></button> : <button type="submit">Cadastrar</button>
+                    }
+                    
+                    
+                </div>
             </Form>
             <Link to='/'>Já tem uma conta? Faça login!</Link>  
         </Container>        

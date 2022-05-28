@@ -4,17 +4,20 @@ import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import styled from 'styled-components';
 import Logo from "../assets/img/trackitlogo.JPG"
+import { ThreeDots } from  'react-loader-spinner'
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [disabled, setDisabled] = useState(false)
+    const [loadingButton, setLoadingButton] = useState(false)
     const navigate = useNavigate();
     const { token, setToken, userImage, setUserImage } = useContext(UserContext);
 
     function LoginUser(event) {
         event.preventDefault();
         setDisabled(true);
+        setLoadingButton(true);
 
         const body = {
             email: email,
@@ -28,12 +31,14 @@ export default function Login() {
             setDisabled(false);
             setUserImage(res.data.image)
             localStorage.setItem('Login-Token', res.data.token);
-            navigate('/habitos')  
+            navigate('/hoje')
+            setLoadingButton(false);  
         });
 
         promise.catch((res) => {
             alert('Erro!')
             setDisabled(false);
+            setLoadingButton(false);
         })          
     }
 
@@ -44,7 +49,11 @@ export default function Login() {
             <Form onSubmit={LoginUser} >                
                 <input type="email" id="email" value={email} disabled={disabled} placeholder="email" required onChange={(e) => setEmail(e.target.value)}/>
                 <input type="password" id="password" value={password} disabled={disabled} placeholder="senha" required onChange={(e) => setPassword(e.target.value)}/>       
-                <div><button type="submit" disabled={disabled}>Entrar</button></div>
+                <div>
+                    {
+                        loadingButton ? <button type="submit" disabled={disabled}><ThreeDots color="#FFFFFF" /></button> : <button type="submit" disabled={disabled}>Entrar</button>
+                    }   
+                </div>
             </Form>
             <Link to='/cadastro'>Não tem uma conta? Cadastre-se!</Link>            
         </Container>

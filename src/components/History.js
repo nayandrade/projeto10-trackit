@@ -3,8 +3,12 @@ import UserContext from "../contexts/UserContext";
 import styled from 'styled-components';
 import Footer from "./Footer"
 import Header from "./Header"
+//import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import { TailSpin } from  'react-loader-spinner'
 
 export default function History() {
+
+
     const { completePercentage } = useContext(UserContext);
     
     return (
@@ -14,7 +18,7 @@ export default function History() {
                 <section>
                     <h1>Histórico</h1>
                     <p>Em breve você poderá ver o histórico dos seus hábitos aqui!</p>
-                </section>               
+                </section>                            
             </Main>            
             <Footer completePercentage={completePercentage}/>
         </>  

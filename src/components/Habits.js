@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Footer from "./Footer";
 import Header from "./Header";
 import Cards from "./Cards";
+import { TailSpin } from  'react-loader-spinner'
 
 function WeekDay ( {day, name, habitDays, status, renderWeek, setRenderWeek, setHabitDays} ) {
     const [chosen, setChosen] = useState(false);
@@ -159,7 +160,7 @@ export default function Habits() {
                 showForm ? HabitForm() : null
             }       
             {                
-                loading ? "Carregando..." : checkHabits()
+                loading ? <TailLoad><TailSpin ariaLabel="loading-indicator" color="#52B6FF" /></TailLoad> : checkHabits()
             }  
         </Main>
         <Footer completePercentage={completePercentage}/>         
@@ -188,6 +189,15 @@ const Main = styled.main`
         font-size: 18px;
         color: #666666;
     }
+`
+
+const TailLoad = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px; 
 `
 
 const OpenForm = styled.div`

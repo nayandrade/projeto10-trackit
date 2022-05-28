@@ -7,6 +7,7 @@ import Footer from "./Footer"
 import Header from "./Header"
 import Day from "./Day";
 import Checkmark from "../assets/img/VectorCheck.svg"
+import { TailSpin } from  'react-loader-spinner'
 
 function Cards ( {habit, setComplete, config, isDone} ) {
     const navigate = useNavigate();    
@@ -124,9 +125,9 @@ export default function Today() {
                     {
                         loading ? "Carregando..." : count()
                     }
-                </section>
+                </section>                
                 {                
-                    loading ? "Carregando..." : checkHabits()
+                    loading ? <TailLoad><TailSpin ariaLabel="loading-indicator" color="#52B6FF" /></TailLoad> : checkHabits()
                 }
             </Main>
             <Footer completePercentage={completePercentage}/>
@@ -162,6 +163,15 @@ const Main = styled.main`
         font-size: 13px;
         color: #666666;
     }
+`
+
+const TailLoad = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px; 
 `
 
 const Done = styled.h3`
