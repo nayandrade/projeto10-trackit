@@ -1,15 +1,17 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { Link, useNavigate } from "react-router-dom";
+import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import styled from 'styled-components';
 import Data from "./data/Data";
 import Footer from "./Footer";
+import Header from "./Header";
 
 function Cards ( {habit} ) {
-    const [days, setDays] = useState (habit.days)
+    const [days, setDays] = useState (habit.days);
     const [week, setWeek] = useState (Data); 
    
-    days.forEach((e, i) => {week.map((day, index) => { if(day.weekday === e) {day.status = true}})})
+    days.forEach((e, i) => {week.map((day, index) => { if(day.weekday === e) {day.status = true}})});
     
     return (
         <Card>
@@ -29,23 +31,23 @@ function Cards ( {habit} ) {
 }
 
 function WeekDay ( {day, name, habitDays, status, renderWeek, setRenderWeek, setHabitDays} ) {
-    const [chosen, setChosen] = useState(false)
+    const [chosen, setChosen] = useState(false);
 
     useEffect(() => {
         if (habitDays.indexOf(day) !== -1) {
-            setChosen(!chosen)
+            setChosen(!chosen);
         }
     }, [false]) 
 
     function Chose() {
 
         if(!chosen) {
-            setChosen(!chosen)
-            setHabitDays([...habitDays, day])
+            setChosen(!chosen);
+            setHabitDays([...habitDays, day]);
             
         } else if (chosen){         
-            setHabitDays(habitDays.filter((e) => e !== day ))
-            setChosen(!chosen)
+            setHabitDays(habitDays.filter((e) => e !== day ));
+            setChosen(!chosen);
         } 
     } 
     
@@ -56,12 +58,14 @@ function WeekDay ( {day, name, habitDays, status, renderWeek, setRenderWeek, set
     )
 }
 
-export default function Habits( {token, userImage} ) {
-    const [habitList, setHabitList] = useState([])  
-    const [habitName, setHabitName] = useState('')
-    const [habitDays, setHabitDays] = useState([])
-    const [loadHabits, setLoadHabit] = useState(true)
-    const [showForm, setShowForm] = useState(false)
+export default function Habits() {
+    const { token, completePercentage } = useContext(UserContext);
+    const [habitList, setHabitList] = useState([]);  
+    const [habitName, setHabitName] = useState('');
+    const [habitDays, setHabitDays] = useState([]);
+    const [loadHabits, setLoadHabit] = useState(true);
+    const [showForm, setShowForm] = useState(false);
+    const [loading, setLoading] = useState(true);
     const week =  [{weekday: 7, name: 'D', status: false},
                         {weekday: 1, name: 'S', status: false}, 
                         {weekday: 2, name: 'T', status: false}, 
@@ -69,7 +73,7 @@ export default function Habits( {token, userImage} ) {
                         {weekday: 4, name: 'Q', status: false}, 
                         {weekday: 5, name: 'S', status: false}, 
                         {weekday: 6, name: 'S', status: false}];
-    const [renderWeek, setRenderWeek] = useState ({...week})
+    const [renderWeek, setRenderWeek] = useState ({...week});
                                    
     const config = {
         headers: {
@@ -83,6 +87,7 @@ export default function Habits( {token, userImage} ) {
         promise.then((res) => {
             setHabitList(res.data)
             setLoadHabit(false)
+            setLoading(false)
         });
     }
   
@@ -104,7 +109,7 @@ export default function Habits( {token, userImage} ) {
     }
 
     function HabitForm() {
-        
+
         return (
             <Form onSubmit={createHabit}>
                 <input type="text" id="habito" value={habitName} placeholder="nome do hábito" required onChange={(e) => setHabitName(e.target.value)}></input>
@@ -160,10 +165,7 @@ export default function Habits( {token, userImage} ) {
     return (
 
         <>
-        <Header userImage={userImage}>
-            <h1>TrackIt</h1>
-            <div></div>            
-        </Header>
+        <Header />
         <Main>
             <section>
                 <h2>Meus Hábitos</h2>
@@ -173,40 +175,15 @@ export default function Habits( {token, userImage} ) {
                 showForm ? HabitForm() : null
             }       
             {                
-                checkHabits()
+                loading ? "Carregando..." : checkHabits()
             }  
         </Main>
-        <Footer />         
+        <Footer completePercentage={completePercentage}/>         
         </>     
     )
 }
 
-const Header = styled.header`
-    width: 100%;
-    height: 70px;
-    font-family: 'Playball', cursive;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #126BA5;
-    color: #fff;
-    font-size: 39px;
-    padding: 0 18px;
 
-    div {
-        width: 51px;
-        height: 51px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        overflow: hidden;
-        background-image: url(${props => props.userImage});
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover
-    }
-`
 
 const Main = styled.main`
     min-height: calc(100vh - 140px);
@@ -229,7 +206,6 @@ const Main = styled.main`
         font-size: 18px;
         color: #666666;
     }
-
 `
 
 const OpenForm = styled.div`
@@ -354,7 +330,6 @@ const DayButton = styled.div`
     text-align: center;
     border: 1px solid ${props => props.chosen ? '#fff' : '#cfcfcf' };
     background-color: ${props => props.chosen ? '#cfcfcf' : '#fff' };
-
 `
 
 const Buttons = styled.div`
@@ -393,4 +368,3 @@ const Save = styled.button`
     outline: none;
     margin-left: 10px;
 `
-

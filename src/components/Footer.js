@@ -1,20 +1,22 @@
-import { useState} from "react"
+import { useState, useContext } from "react"
 import { Link, useNavigate } from "react-router-dom";
+import UserContext from "../contexts/UserContext";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import "../components/css/styles.css"
 import styled from 'styled-components';
 
-export default function Footer() {
-    const percentage = 66;
+export default function Footer( {completePercentage} ) {
+    
+    
 
     return(
         <FooterArea>
             <section>
-                <Link to='/hoje'><p>Hábitos</p></Link>
-                <div>
+                <Link to='/habitos'><p>Hábitos</p></Link>
+                <Link to='/hoje'><div>
                     <CircularProgressbar
-                        value={percentage}
+                        value={completePercentage}
                         text={`Hoje`}
                         background
                         backgroundPadding={6}
@@ -25,7 +27,7 @@ export default function Footer() {
                             trailColor: "transparent"
                             })}
                     />
-                </div>
+                </div></Link>
                 <Link to='/historico'><p>Histórico</p></Link>
             </section>        
         </FooterArea>
