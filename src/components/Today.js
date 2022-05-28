@@ -84,7 +84,7 @@ export default function Today() {
 
         if (progressCount > 0) {
             return (
-                <Done isDone={true}>{completePercentage.toFixed(2)}% dos hábitos concluídos</Done>
+                <Done isDone={true}>{completePercentage.toFixed(0)}% dos hábitos concluídos</Done>
             )
         } else {
             return (

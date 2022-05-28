@@ -20,11 +20,8 @@ export default function Cards ( {habit, token, config, setLoadHabit } ) {
             });
             promise.catch((res) => {
                 console.log(res.message)
-            });
-            
-        }
-        
-
+            });            
+        }       
     }
 
 
