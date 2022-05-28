@@ -34,10 +34,8 @@ export default function Login() {
         promise.catch((res) => {
             alert('Erro!')
             setDisabled(false);
-        })
-              
+        })          
     }
-    
 
     return (
         <Container>

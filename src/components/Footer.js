@@ -1,6 +1,4 @@
-import { useState, useContext } from "react"
-import { Link, useNavigate } from "react-router-dom";
-import UserContext from "../contexts/UserContext";
+import { Link } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import "../components/css/styles.css"
@@ -8,8 +6,6 @@ import styled from 'styled-components';
 
 export default function Footer( {completePercentage} ) {
     
-    
-
     return(
         <FooterArea>
             <section>

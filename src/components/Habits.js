@@ -1,13 +1,11 @@
 import { useState, useEffect, useContext } from "react"
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import styled from 'styled-components';
 import Footer from "./Footer";
 import Header from "./Header";
 import Cards from "./Cards";
-
-
 
 function WeekDay ( {day, name, habitDays, status, renderWeek, setRenderWeek, setHabitDays} ) {
     const [chosen, setChosen] = useState(false);
@@ -168,8 +166,6 @@ export default function Habits() {
         </>     
     )
 }
-
-
 
 const Main = styled.main`
     min-height: calc(100vh - 140px);
