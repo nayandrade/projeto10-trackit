@@ -82,6 +82,9 @@ export default function Habits() {
                     <Cards 
                     key={index}
                     habit={habit}
+                    token={token}
+                    config={config}
+                    setLoadHabit={setLoadHabit}
                     />                                       
                 )) 
             )
@@ -136,7 +139,9 @@ export default function Habits() {
                 setLoadHabit(true)
                 setShowForm(false)
             });
-            promise.catch(navigate("/", { replace: true }));
+            promise.catch((res) => {
+                navigate("/")
+            });
 
         }  else {
             alert("Selecione algum dia para esse habito")

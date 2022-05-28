@@ -17,14 +17,19 @@ function Cards ( {habit, setComplete, config, isDone} ) {
             promise.then((res) => {
                 setComplete(true)
             });
-            promise.catch(navigate("/", { replace: true }));
+            promise.catch((res) => {
+                navigate("/")
+            });
         } else if (habit.done === true) {
             const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, {}, config);
             promise.then((res) => {
                 setComplete(true)
             });
-            promise.catch(navigate("/", { replace: true }));
+            promise.catch((res) => {
+                navigate("/")
+            });
         }
+        
     }
 
     return (
