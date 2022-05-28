@@ -1,9 +1,7 @@
 import { useState} from "react"
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import styled from 'styled-components';
-
 import Logo from "../assets/img/trackitlogo.JPG"
 
 export default function Signin() {
@@ -27,9 +25,7 @@ export default function Signin() {
 
             promise.then((res) => {
                 navigate("/", { replace: true })
-            });
-        
-                   
+            });               
     }
 
     return (

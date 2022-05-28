@@ -1,14 +1,16 @@
-import { useState} from "react"
+import { useState, useContext } from "react"
 import { Link, useNavigate } from "react-router-dom";
+import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import styled from 'styled-components';
 import Logo from "../assets/img/trackitlogo.JPG"
 
-export default function Login( {token, setToken, userImage, setUserImage} ) {
+export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [disabled, setDisabled] = useState(false)
     const navigate = useNavigate();
+    const { token, setToken, userImage, setUserImage } = useContext(UserContext);
 
     function LoginUser(event) {
         event.preventDefault();
