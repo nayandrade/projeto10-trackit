@@ -60,6 +60,7 @@ function WeekDay ( {day, name, habitDays, status, renderWeek, setRenderWeek, set
 
 export default function Habits() {
     const { token, completePercentage } = useContext(UserContext);
+    const navigate = useNavigate();
     const [habitList, setHabitList] = useState([]);  
     const [habitName, setHabitName] = useState('');
     const [habitDays, setHabitDays] = useState([]);
@@ -131,10 +132,9 @@ export default function Habits() {
                 </div>
                 <Buttons><Cancel type="reset" value="Reset" onClick={() => setShowForm(false)}>Cancelar</Cancel><Save type="submit" value="Submit">Salvar</Save></Buttons>
             </Form>
-
         )
-
     }
+
 
     function createHabit(event) {
         event.preventDefault()
@@ -157,6 +157,8 @@ export default function Habits() {
                 setLoadHabit(true)
                 setShowForm(false)
             });
+            promise.catch(navigate("/", { replace: true }));
+
         }  else {
             alert("Selecione algum dia para esse habito")
         }
@@ -270,7 +272,7 @@ const Day = styled.div`
 `
 
 const Form = styled.form`
-    width: 340px;
+    width: 100%;
     height: 180px;
     background-color: #fff;
     border-radius: 5px;

@@ -36,7 +36,7 @@ export default function Signin() {
                 <input type="email" id="email" value={email} placeholder="email" required onChange={(e) => setEmail(e.target.value)}/>
                 <input type="password" id="password" value={password} placeholder="senha" required onChange={(e) => setPassword(e.target.value)}/>       
                 <input type="text" id="nome" value={name} placeholder="nome" required onChange={(e) => setName(e.target.value)}/> 
-                <input type="url" name="image" id="image" pattern="(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)" value={image} placeholder="foto" required onChange={(e) => setImage(e.target.value)}/>
+                <input type="url" name="image" id="image" pattern="/([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i" value={image} placeholder="foto" required onChange={(e) => setImage(e.target.value)}/>
                 <div><button type="submit">Cadastrar</button></div>
             </Form>
             <Link to='/'>Já tem uma conta? Faça login!</Link>  

@@ -29,7 +29,13 @@ export default function Login() {
             setUserImage(res.data.image)
             localStorage.setItem('Login-Token', res.data.token);
             navigate('/habitos')  
-        });       
+        });
+
+        promise.catch((res) => {
+            alert('Erro!')
+            setDisabled(false);
+        })
+              
     }
     
 

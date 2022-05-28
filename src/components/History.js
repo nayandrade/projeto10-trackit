@@ -8,6 +8,7 @@ import Day from "./Day"
 
 export default function History() {
     const { token, setCompletePercentage, completePercentage } = useContext(UserContext);
+    const navigate = useNavigate();
     return (
         <>
             <Header />
