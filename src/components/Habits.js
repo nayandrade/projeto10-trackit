@@ -1,34 +1,12 @@
 import { useState, useEffect, useContext } from "react"
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import styled from 'styled-components';
-import Data from "./data/Data";
 import Footer from "./Footer";
 import Header from "./Header";
-
-function Cards ( {habit} ) {
-    const [days, setDays] = useState (habit.days);
-    const [week, setWeek] = useState (Data); 
-   
-    days.forEach((e, i) => {week.map((day, index) => { if(day.weekday === e) {day.status = true}})});
-    
-    return (
-        <Card>
-            <CardTitle>
-                <p>{habit.name}</p>
-                <ion-icon name="trash-outline"></ion-icon>
-            </CardTitle>  
-            <WeekDays>
-                {
-                    week.map((day) => (
-                        <Day status={day.status}>{day.name}</Day>
-                    ))                    
-                }
-            </WeekDays>          
-        </Card>        
-    )
-}
+import Cards from "./Cards";
+import { TailSpin } from  'react-loader-spinner'
 
 function WeekDay ( {day, name, habitDays, status, renderWeek, setRenderWeek, setHabitDays} ) {
     const [chosen, setChosen] = useState(false);
@@ -60,6 +38,7 @@ function WeekDay ( {day, name, habitDays, status, renderWeek, setRenderWeek, set
 
 export default function Habits() {
     const { token, completePercentage } = useContext(UserContext);
+    const navigate = useNavigate();
     const [habitList, setHabitList] = useState([]);  
     const [habitName, setHabitName] = useState('');
     const [habitDays, setHabitDays] = useState([]);
@@ -102,6 +81,9 @@ export default function Habits() {
                     <Cards 
                     key={index}
                     habit={habit}
+                    token={token}
+                    config={config}
+                    setLoadHabit={setLoadHabit}
                     />                                       
                 )) 
             )
@@ -131,10 +113,9 @@ export default function Habits() {
                 </div>
                 <Buttons><Cancel type="reset" value="Reset" onClick={() => setShowForm(false)}>Cancelar</Cancel><Save type="submit" value="Submit">Salvar</Save></Buttons>
             </Form>
-
         )
-
     }
+
 
     function createHabit(event) {
         event.preventDefault()
@@ -157,6 +138,10 @@ export default function Habits() {
                 setLoadHabit(true)
                 setShowForm(false)
             });
+            promise.catch((res) => {
+                navigate("/")
+            });
+
         }  else {
             alert("Selecione algum dia para esse habito")
         }
@@ -175,15 +160,13 @@ export default function Habits() {
                 showForm ? HabitForm() : null
             }       
             {                
-                loading ? "Carregando..." : checkHabits()
+                loading ? <TailLoad><TailSpin ariaLabel="loading-indicator" color="#52B6FF" /></TailLoad> : checkHabits()
             }  
         </Main>
         <Footer completePercentage={completePercentage}/>         
         </>     
     )
 }
-
-
 
 const Main = styled.main`
     min-height: calc(100vh - 140px);
@@ -208,6 +191,15 @@ const Main = styled.main`
     }
 `
 
+const TailLoad = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px; 
+`
+
 const OpenForm = styled.div`
     width: 40px;
     height: 40px;
@@ -227,50 +219,10 @@ const OpenForm = styled.div`
         transform: translateY(1px);        
     }
 `
-const Card = styled.div`
-    width: 100%;
-    height: 91px;
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 13px;
-    margin-bottom: 10px;
 
-    div ion-icon {
-        font-size: 15px;
-        color: #666666;
-    }
-`
-
-const CardTitle = styled.div`
-        display: flex;
-        align-items: center;
-        justify-content: space-between; 
-`
-
-const WeekDays = styled.div`
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        margin-top: 13px;
-`
-
-
-
-const Day = styled.div`
-    width: 30px;
-    height: 30px;
-    border: 1px solid ${props => props.status ? '#fff' : '#cfcfcf' };
-    color: ${props => props.status ? '#fff' : '#cfcfcf' };
-    background-color: ${props => props.status ? '#cfcfcf' : '#fff' };
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 4px;
-`
 
 const Form = styled.form`
-    width: 340px;
+    width: 100%;
     height: 180px;
     background-color: #fff;
     border-radius: 5px;

@@ -11,6 +11,7 @@ export default function Loading() {
         </>
     );
 }
+
 const Load = styled.div`
     width: 3.5em;
     display: flex;

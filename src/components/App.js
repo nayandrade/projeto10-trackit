@@ -10,7 +10,7 @@ import "../assets/css/reset.css"
 
 export default function App() { 
   const [token, setToken] = useState('');
-  const [userImage, setUserImage] = useState('')
+  const [userImage, setUserImage] = useState('');
   const [completePercentage, setCompletePercentage] = useState(0);
 
   return (
