@@ -14,6 +14,27 @@ export default function Login() {
     const navigate = useNavigate();
     const { token, setToken, userImage, setUserImage } = useContext(UserContext);
 
+    if(localStorage.getItem('LastUser') !== null) {
+        let ourArray = JSON.parse(localStorage.getItem('LastUser'));
+        const { email, password } = ourArray;
+        const body = {
+            email: email,
+            password: password,
+        };
+        const promise = axios.post(
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body);
+
+        promise.then((res) => {
+            setToken(res.data.token)
+            setDisabled(false);
+            setUserImage(res.data.image)
+            navigate('/hoje')
+            setLoadingButton(false);  
+        });
+    }
+
+    
+
     function LoginUser(event) {
         event.preventDefault();
         setDisabled(true);
@@ -31,6 +52,7 @@ export default function Login() {
             setDisabled(false);
             setUserImage(res.data.image)
             localStorage.setItem('Login-Token', res.data.token);
+            localStorage.setItem('LastUser',JSON.stringify(body));
             navigate('/hoje')
             setLoadingButton(false);  
         });

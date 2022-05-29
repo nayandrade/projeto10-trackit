@@ -6,6 +6,9 @@ export default function Day() {
     let myMonth = ("0" + dayjs().month()).slice(-2);
    
     function myWeekDay() {
+        if (weekday === 0) {
+            myWeek = "Domingo"
+        }
         if (weekday === 1) {
             myWeek = "Segunda"
         }
@@ -23,16 +26,15 @@ export default function Day() {
         }
         if (weekday === 6) {
             myWeek = "Sábado"
-        }
-        if (weekday === 0) {
-            myWeek = "Domingo"
-        }
+        }      
     };
+
+    console.log(myWeek)
 
     return (
         <>
             {
-                weekday ? myWeekDay() : null
+                weekday !== null ? myWeekDay() : null
             }
             <h2>{myWeek}, {myDay}/{myMonth}</h2>        
         </> 

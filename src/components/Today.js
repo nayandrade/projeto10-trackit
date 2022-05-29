@@ -63,6 +63,7 @@ export default function Today() {
         const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config)
 
         promise.then((response) => {
+            console.log(response.data)
             setTodayHabits(response.data);
             setComplete(false)
             setLoading(false)            

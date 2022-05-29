@@ -45,7 +45,7 @@ export default function Habits() {
     const [loadHabits, setLoadHabit] = useState(true);
     const [showForm, setShowForm] = useState(false);
     const [loading, setLoading] = useState(true);
-    const week =  [{weekday: 7, name: 'D', status: false},
+    const week =  [{weekday: 0, name: 'D', status: false},
                         {weekday: 1, name: 'S', status: false}, 
                         {weekday: 2, name: 'T', status: false}, 
                         {weekday: 3, name: 'Q', status: false}, 
