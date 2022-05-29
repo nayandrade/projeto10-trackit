@@ -1,16 +1,16 @@
-import { useState, useContext } from "react"
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import styled from 'styled-components';
-import Logo from "../assets/img/trackitlogo.JPG"
-import { ThreeDots } from  'react-loader-spinner'
+import Logo from "../assets/img/trackitlogo.JPG";
+import { ThreeDots } from  'react-loader-spinner';
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [disabled, setDisabled] = useState(false)
-    const [loadingButton, setLoadingButton] = useState(false)
+    const [disabled, setDisabled] = useState(false);
+    const [loadingButton, setLoadingButton] = useState(false);
     const navigate = useNavigate();
     const { token, setToken, userImage, setUserImage } = useContext(UserContext);
 
@@ -25,10 +25,10 @@ export default function Login() {
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body);
 
         promise.then((res) => {
-            setToken(res.data.token)
+            setToken(res.data.token);
             setDisabled(false);
-            setUserImage(res.data.image)
-            navigate('/hoje')
+            setUserImage(res.data.image);
+            navigate('/hoje');
             setLoadingButton(false);  
         });
     }
@@ -48,17 +48,17 @@ export default function Login() {
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body);
 
         promise.then((res) => {
-            setToken(res.data.token)
+            setToken(res.data.token);
             setDisabled(false);
-            setUserImage(res.data.image)
+            setUserImage(res.data.image);
             localStorage.setItem('Login-Token', res.data.token);
             localStorage.setItem('LastUser',JSON.stringify(body));
-            navigate('/hoje')
+            navigate('/hoje');
             setLoadingButton(false);  
         });
 
         promise.catch((res) => {
-            alert('Erro!')
+            alert('Erro!');
             setDisabled(false);
             setLoadingButton(false);
         })          

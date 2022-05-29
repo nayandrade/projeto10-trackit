@@ -6,7 +6,7 @@ import Signin from "./Signin";
 import Habits from "./Habits";
 import Today from "./Today";
 import History from "./History";
-import "../assets/css/reset.css"
+import "../assets/css/reset.css";
 
 export default function App() { 
   const [token, setToken] = useState('');
@@ -28,5 +28,3 @@ export default function App() {
 
   );
 }
-
-

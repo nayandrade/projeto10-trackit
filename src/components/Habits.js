@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react"
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Footer from "./Footer";
 import Header from "./Header";
 import Cards from "./Cards";
-import { TailSpin } from  'react-loader-spinner'
+import { TailSpin } from  'react-loader-spinner';
 
 function WeekDay ( {day, name, habitDays, status, renderWeek, setRenderWeek, setHabitDays} ) {
     const [chosen, setChosen] = useState(false);
@@ -15,7 +15,7 @@ function WeekDay ( {day, name, habitDays, status, renderWeek, setRenderWeek, set
         if (habitDays.indexOf(day) !== -1) {
             setChosen(!chosen);
         }
-    }, [false]) 
+    }, [false])
 
     function Chose() {
 
@@ -64,9 +64,9 @@ export default function Habits() {
         const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config);       
         
         promise.then((res) => {
-            setHabitList(res.data)
-            setLoadHabit(false)
-            setLoading(false)
+            setHabitList(res.data);
+            setLoadHabit(false);
+            setLoading(false);
         });
     }
   
@@ -135,15 +135,15 @@ export default function Habits() {
             promise.then((res) => {
                 setHabitName("");
                 setHabitDays([]);
-                setLoadHabit(true)
-                setShowForm(false)
+                setLoadHabit(true);
+                setShowForm(false);
             });
             promise.catch((res) => {
-                navigate("/")
+                navigate("/");
             });
 
         }  else {
-            alert("Selecione algum dia para esse habito")
+            alert("Selecione algum dia para esse habito");
         }
     }
 

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from "react";
 import styled from 'styled-components';
 import axios from "axios";
 import Data from "./data/Data";
@@ -6,7 +6,7 @@ import Data from "./data/Data";
 export default function Cards ( {habit, token, config, setLoadHabit } ) {
     const [days, setDays] = useState (habit.days);
     const [week, setWeek] = useState (Data);
-    const id = habit.id
+    const id = habit.id;
    
     days.forEach((e, i) => {week.map((day, index) => { if(day.weekday === e) {day.status = true}})});
     
@@ -15,15 +15,13 @@ export default function Cards ( {habit, token, config, setLoadHabit } ) {
         if (confirmation) {
             const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config);
             promise.then((res) => {
-                setLoadHabit(true)
-                console.log('apaguei')
+                setLoadHabit(true);
             });
             promise.catch((res) => {
-                console.log(res.message)
+                console.log(res.message);
             });            
         }       
     }
-
 
     return (
         <Card>

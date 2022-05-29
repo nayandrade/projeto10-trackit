@@ -29,8 +29,6 @@ export default function Day() {
         }      
     };
 
-    console.log(myWeek)
-
     return (
         <>
             {

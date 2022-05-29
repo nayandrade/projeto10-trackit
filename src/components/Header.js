@@ -11,7 +11,7 @@ export default function Header() {
          let confirmation = window.confirm('Você tem certeza que deseja desconectar?');
          if (confirmation) {
             localStorage.removeItem('LastUser');
-            navigate("/")
+            navigate("/");
          }
     }
 

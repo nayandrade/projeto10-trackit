@@ -1,33 +1,33 @@
-import { useState, useContext } from "react"
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import styled from 'styled-components';
-import Footer from "./Footer"
-import Header from "./Header"
+import Footer from "./Footer";
+import Header from "./Header";
 import Day from "./Day";
-import Checkmark from "../assets/img/VectorCheck.svg"
-import { TailSpin } from  'react-loader-spinner'
+import Checkmark from "../assets/img/VectorCheck.svg";
+import { TailSpin } from  'react-loader-spinner';
 
 function Cards ( {habit, setComplete, config, isDone} ) {
     const navigate = useNavigate();    
     function toggle () {
-        const id = habit.id
+        const id = habit.id;
         if (habit.done === false) {
             const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, {}, config);
             promise.then((res) => {
-                setComplete(true)
+                setComplete(true);
             });
             promise.catch((res) => {
-                navigate("/")
+                navigate("/");
             });
         } else if (habit.done === true) {
             const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, {}, config);
             promise.then((res) => {
-                setComplete(true)
+                setComplete(true);
             });
             promise.catch((res) => {
-                navigate("/")
+                navigate("/");
             });
         }
         
@@ -63,13 +63,12 @@ export default function Today() {
         const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config)
 
         promise.then((response) => {
-            console.log(response.data)
             setTodayHabits(response.data);
-            setComplete(false)
-            setLoading(false)            
+            setComplete(false);
+            setLoading(false);         
         })
         promise.catch((res) => {
-            navigate('/')  
+            navigate('/');  
         })
     }
 
@@ -81,7 +80,7 @@ export default function Today() {
             if (habit.done) {
                 progressCount++;
             }
-            setCompletePercentage((progressCount / length ) * 100)
+            setCompletePercentage((progressCount / length ) * 100);
         });
 
         if (progressCount > 0) {
