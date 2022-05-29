@@ -85,7 +85,7 @@ export default function Login() {
 const Container = styled.div`
     font-family: 'Lexend Deca', sans-serif;
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 68px);
     display: flex;
     flex-direction: column;
     align-items: center;
