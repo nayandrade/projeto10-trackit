@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import "../components/css/styles.css"
+import "../components/css/styles.css";
 import styled from 'styled-components';
 
 export default function Footer( {completePercentage} ) {
@@ -27,7 +27,7 @@ export default function Footer( {completePercentage} ) {
                 <Link to='/historico'><p>Histórico</p></Link>
             </section>        
         </FooterArea>
-    )
+    );
 }
 
 const FooterArea = styled.footer`
@@ -66,7 +66,5 @@ const FooterArea = styled.footer`
         height: 91px;
         display: flex;
         align-items: flex-end;
-    }
-
-    
+    }    
 `

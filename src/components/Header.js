@@ -1,12 +1,23 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import styled from 'styled-components';
 
 export default function Header() {
     const { userImage } = useContext(UserContext);
+    const navigate = useNavigate();
+
+    function logOut() {
+         let confirmation = window.confirm('Você tem certeza que deseja desconectar?');
+         if (confirmation) {
+            localStorage.removeItem('LastUser');
+            navigate("/");
+         }
+    }
+
     return (
         <HeaderArea userImage={userImage}>
-            <h1>TrackIt</h1>
+            <h1 onClick={logOut}>TrackIt</h1>
             <div></div>            
         </HeaderArea>
     )

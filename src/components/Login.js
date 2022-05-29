@@ -1,18 +1,39 @@
-import { useState, useContext } from "react"
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import styled from 'styled-components';
-import Logo from "../assets/img/trackitlogo.JPG"
-import { ThreeDots } from  'react-loader-spinner'
+import Logo from "../assets/img/trackitlogo.JPG";
+import { ThreeDots } from  'react-loader-spinner';
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [disabled, setDisabled] = useState(false)
-    const [loadingButton, setLoadingButton] = useState(false)
+    const [disabled, setDisabled] = useState(false);
+    const [loadingButton, setLoadingButton] = useState(false);
     const navigate = useNavigate();
     const { token, setToken, userImage, setUserImage } = useContext(UserContext);
+
+    if(localStorage.getItem('LastUser') !== null) {
+        let ourArray = JSON.parse(localStorage.getItem('LastUser'));
+        const { email, password } = ourArray;
+        const body = {
+            email: email,
+            password: password,
+        };
+        const promise = axios.post(
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body);
+
+        promise.then((res) => {
+            setToken(res.data.token);
+            setDisabled(false);
+            setUserImage(res.data.image);
+            navigate('/hoje');
+            setLoadingButton(false);  
+        });
+    }
+
+    
 
     function LoginUser(event) {
         event.preventDefault();
@@ -27,16 +48,17 @@ export default function Login() {
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body);
 
         promise.then((res) => {
-            setToken(res.data.token)
+            setToken(res.data.token);
             setDisabled(false);
-            setUserImage(res.data.image)
+            setUserImage(res.data.image);
             localStorage.setItem('Login-Token', res.data.token);
-            navigate('/hoje')
+            localStorage.setItem('LastUser',JSON.stringify(body));
+            navigate('/hoje');
             setLoadingButton(false);  
         });
 
         promise.catch((res) => {
-            alert('Erro!')
+            alert('Erro!');
             setDisabled(false);
             setLoadingButton(false);
         })          
@@ -63,7 +85,7 @@ export default function Login() {
 const Container = styled.div`
     font-family: 'Lexend Deca', sans-serif;
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 68px);
     display: flex;
     flex-direction: column;
     align-items: center;

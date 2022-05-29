@@ -1,16 +1,16 @@
-import { useState} from "react"
+import { useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from 'styled-components';
-import Logo from "../assets/img/trackitlogo.JPG"
-import { ThreeDots } from  'react-loader-spinner'
+import Logo from "../assets/img/trackitlogo.JPG";
+import { ThreeDots } from  'react-loader-spinner';
 
 export default function Signin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
-    const [loadingButton, setLoadingButton] = useState(false)
+    const [loadingButton, setLoadingButton] = useState(false);
     const navigate = useNavigate();
 
     function CreateUser(event) {   
@@ -27,7 +27,7 @@ export default function Signin() {
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body);
 
             promise.then((res) => {
-                navigate("/", { replace: true })
+                navigate("/", { replace: true });
                 setLoadingButton(false);
             });
             promise.catch((res) => {
@@ -49,8 +49,6 @@ export default function Signin() {
                     {
                         loadingButton ? <button type="submit"><ThreeDots color="#FFFFFF" /></button> : <button type="submit">Cadastrar</button>
                     }
-                    
-                    
                 </div>
             </Form>
             <Link to='/'>Já tem uma conta? Faça login!</Link>  
