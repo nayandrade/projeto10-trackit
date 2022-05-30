@@ -8,7 +8,7 @@ import Header from "./Header";
 import Cards from "./Cards";
 import { TailSpin } from  'react-loader-spinner';
 
-function WeekDay ( {day, name, habitDays, status, renderWeek, setRenderWeek, setHabitDays} ) {
+function WeekDay ( {day, name, habitDays, setHabitDays} ) {
     const [chosen, setChosen] = useState(false);
 
     useEffect(() => {
@@ -52,7 +52,6 @@ export default function Habits() {
                         {weekday: 4, name: 'Q', status: false}, 
                         {weekday: 5, name: 'S', status: false}, 
                         {weekday: 6, name: 'S', status: false}];
-    const [renderWeek, setRenderWeek] = useState ({...week});
                                    
     const config = {
         headers: {
@@ -102,9 +101,6 @@ export default function Habits() {
                         key={index}
                         day={day.weekday}
                         name={day.name}
-                        status={day.status}
-                        renderWeek={renderWeek}
-                        setRenderWeek={setRenderWeek}
                         habitDays={habitDays}
                         setHabitDays={setHabitDays}
                         />
