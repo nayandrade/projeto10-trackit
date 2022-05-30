@@ -31,6 +31,11 @@ export default function Login() {
             navigate('/hoje');
             setLoadingButton(false);  
         });
+        promise.catch((res) => {
+            alert('Erro!');
+            setDisabled(false);
+            setLoadingButton(false);  
+        });
     }
 
     

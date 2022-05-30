@@ -1,9 +1,10 @@
 export default function Day() {
-    const dayjs = require('dayjs');
+    const dayjs = require('dayjs');    
     const weekday = dayjs().day();
+    const month = dayjs().month() + 1;
     let myWeek = "";
     let myDay = ("0" + dayjs().date()).slice(-2);
-    let myMonth = ("0" + dayjs().month()).slice(-2);
+    let myMonth = ("0" + month).slice(-2);
    
     function myWeekDay() {
         if (weekday === 0) {
